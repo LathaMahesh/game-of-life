@@ -1,5 +1,5 @@
 node('HRMS&&QA') {
-    stage('git){
+    stage('git'){
         git 'https://github.com/LathaMahesh/game-of-life.git'
     }
     stage('build'){
