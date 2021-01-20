@@ -3,7 +3,7 @@ pipeline{
     stages {
         stage('git'){
             steps {
-                git branch: 'DeclarativePipeline', 'url: https://github.com/LathaMahesh/game-of-life.git'
+                git branch: 'DeclarativePipeline', url: 'https://github.com/LathaMahesh/game-of-life.git'   
             }
         }
         stage('compile'){
