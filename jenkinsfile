@@ -1,0 +1,35 @@
+pipeline{
+    agent any
+    parameters{
+        choice(name:'branch_name', choices:['master' , 'DeclarativePipeline' , 'ScriptedPipeline'] , description:'Which branch to Build')
+        choice(choices:['BUILD' , 'RELEASE'] , name:'BUILD_TYPE', description:'What to do with code')
+    }
+
+    stages{
+        stage('git'){
+            steps{
+                git branch: "$params.branch_name" , url: 'https://github.com/LathaMahesh/game-of-life.git'
+            }
+        }
+        stage('build') {
+                when {
+                    allOf {
+                        expression { params.BUILD_TYPE == 'BUILD'}
+                    }
+                }
+                steps {
+                    sh ' mvn compile'
+                    }
+                }
+        stage('Release') {
+            when {
+                allOf {
+                    expression { params.BUILD_TYPE == 'RELEASE'}
+                }
+            }
+            steps {
+                sh ' mvn clean install'
+            }
+        }
+    }
+}
